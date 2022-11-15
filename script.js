@@ -7,7 +7,12 @@ const password = document.querySelector("#password");
 const confirmPass = document.querySelector("#confirmPass");
 
 form.addEventListener("submit", (e) => {
-  if (emailValidator() && passwordValidator() && confirmPassValidator()) {
+  if (
+    emailValidator() &&
+    zipCodeValidator() &&
+    passwordValidator() &&
+    confirmPassValidator()
+  ) {
     return true;
   } else {
     e.preventDefault();
@@ -63,5 +68,16 @@ const confirmPassValidator = () => {
     return false;
   }
   confirmPass.setCustomValidity("");
+  return true;
+};
+
+const zipCodeValidator = () => {
+  const re = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
+  if (!re.test(zipCode.value)) {
+    zipCode.setCustomValidity("Please enter a valid zip code");
+    zipCode.reportValidity();
+    return false;
+  }
+  zipCode.setCustomValidity("");
   return true;
 };
