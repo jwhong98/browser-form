@@ -9,6 +9,7 @@ const confirmPass = document.querySelector("#confirmPass");
 form.addEventListener("submit", (e) => {
   if (
     emailValidator() &&
+    countryValidator() &&
     zipCodeValidator() &&
     passwordValidator() &&
     confirmPassValidator()
@@ -71,8 +72,23 @@ const confirmPassValidator = () => {
   return true;
 };
 
+const countryValidator = () => {
+  if (country.validity.valueMissing) {
+    country.setCustomValidity("Please enter your country");
+    country.reportValidity();
+    return false;
+  }
+  country.setCustomValidity("");
+  return true;
+};
+
 const zipCodeValidator = () => {
   const re = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
+  if (zipCode.validity.valueMissing) {
+    zipCode.setCustomValidity("This field is required");
+    zipCode.reportValidity();
+    return false;
+  }
   if (!re.test(zipCode.value)) {
     zipCode.setCustomValidity("Please enter a valid zip code");
     zipCode.reportValidity();
